@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prabhat Tewatia | Full Stack Developer - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /*
+        ========================================
+        1. CSS Reset & Global Styles (Relative Units)
+        ========================================
+        */
+        :root {
+            /* 1rem = 16px (Browser default) */
+            --primary-color: #007bff; /* Bright Blue */
+            --secondary-color: #ff6347; /* Tomato Red for highlighting */
+            --text-dark: #333;
+            --text-light: #f4f4f4;
+            --bg-light: #f9f9f9;
+            --bg-dark: #1e1e1e;
+            --gap-l: 3rem;
+            --gap-m: 1.5rem;
+            --gap-s: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            /* Font size using vw for responsiveness on large screens */
+            font-size: max(16px, 1.1vw);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: var(--gap-s);
+            color: var(--text-dark);
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .container {
+            width: min(90%, 1200px);
+            margin: 0 auto;
+            padding: var(--gap-l) 0;
+        }
+
+        section {
+            padding: var(--gap-l) 0;
+            opacity: 0; /* For fade-in animation */
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        section.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /*
+        ========================================
+        2. Header & Navigation (Flexbox)
+        ========================================
+        */
+        .header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: var(--gap-m) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .logo {
+            font-size: 1.8rem; /* rem unit */
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex; /* Flexbox for navigation */
+            gap: var(--gap-m);
+        }
+
+        .nav-list a {
+            color: var(--text-light);
+            font-weight: 400;
+            transition: color 0.3s ease, transform 0.3s ease; /* Transition effect */
+            padding: 0.5rem 0.2rem;
+        }
+
+        .nav-list a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px); /* Transform effect on hover */
+        }
+
+        /*
+        ========================================
+        3. Hero Section (Flexbox)
+        ========================================
+        */
+        .hero {
+            background-color: var(--bg-light);
+            padding: var(--gap-l) 0 calc(var(--gap-l) * 1.5);
+        }
+
+        .hero-content {
+            display: flex; /* Flexbox for hero content */
+            align-items: center;
+            gap: var(--gap-l);
+        }
+
+        .hero-text {
+            flex: 2;
+        }
+
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image {
+            width: 15rem; /* rem unit for image size */
+            height: 15rem;
+            background-color: #ccc;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--text-dark);
+        }
+
+        /* Keyframe Animation for "Full Stack Developer" */
+        .highlight {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            display: inline-block;
+            animation: color-change 4s infinite alternate; /* Keyframe Animation */
+            margin-bottom: var(--gap-s);
+        }
+
+        @keyframes color-change {
+            0% { color: var(--secondary-color); }
+            50% { color: var(--primary-color); }
+            100% { color: #f39c12; } /* Another vibrant color */
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem; /* rem unit */
+            margin-top: var(--gap-m);
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05) translateY(-2px); /* Transform & Scale on hover */
+        }
+
+        /*
+        ========================================
+        4. Skills Section (CSS Grid)
+        ========================================
+        */
+        .skills-grid {
+            display: grid; /* CSS Grid for skills */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--gap-m);
+            margin-top: var(--gap-l);
+        }
+
+        .skill-card {
+            background-color: #fff;
+            padding: var(--gap-m);
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) rotate(1deg); /* Transform on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--secondary-color);
+        }
+
+        /*
+        ========================================
+        5. Projects Section (CSS Grid)
+        ========================================
+        */
+        .projects-grid {
+            display: grid; /* CSS Grid for projects */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--gap-l);
+            margin-top: var(--gap-l);
+        }
+
+        .project-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.03); /* Scale transform on hover */
+        }
+
+        .project-info {
+            padding: var(--gap-m);
+        }
+
+        .project-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /*
+        ========================================
+        6. Contact Section (Form Styling)
+        ========================================
+        */
+        .contact-form {
+            max-width: 600px;
+            margin-top: var(--gap-l);
+        }
+
+        .form-group {
+            margin-bottom: var(--gap-m);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem; /* rem unit */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /*
+        ========================================
+        7. Footer
+        ========================================
+        */
+        .footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: var(--gap-m) 0;
+            font-size: 0.9rem;
+        }
+
+        /*
+        ========================================
+        8. Media Queries (Responsiveness)
+        ========================================
+        */
+
+        /* Tablet Layout (max-width: 992px) */
+        @media (max-width: 62rem) { /* 992px */
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .highlight { font-size: 3rem; }
+
+            .hero-content {
+                flex-direction: column; /* Stacks on tablet/mobile */
+                text-align: center;
+            }
+
+            .hero-image {
+                width: 12rem;
+                height: 12rem;
+                order: -1; /* Image moves to the top */
+                margin-bottom: var(--gap-m);
+            }
+
+            .nav-list {
+                gap: 1rem;
+            }
+        }
+
+        /* Mobile Layout (max-width: 576px) */
+        @media (max-width: 36rem) { /* 576px */
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            .highlight { font-size: 2.5rem; }
+
+            .nav-list {
+                flex-direction: column; /* Stacks navigation links */
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .header .container {
+                flex-direction: column;
+                gap: var(--gap-s);
+            }
+
+            .skills-grid, .projects-grid {
+                grid-template-columns: 1fr; /* Single column layout for cards */
+            }
+
+            .container {
+                padding: var(--gap-m) 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <span class="logo">Prabhat Tewatia Portfolio</span>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero loaded">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Hello, I am Prabhat Tewatia </h1>
+                <span class="highlight">Full Stack Developer</span>
+                <p class="tagline">
+                    I am a BTECH student from haryana, palwal.
+                    I use HTML, CSS, JavaScript, and React to build web applications and engaging UI/UX designs.
+                </p>
+                <a href="#contact" class="btn">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about loaded">
+        <div class="container">
+            <h2><span style="color: var(--primary-color);">#</span> About Me</h2>
+            <p>
+            My name is Prabhat Tewatia I am currently pursuing a Btech CSE (Ai& Ml)I am an enthusiastic full-stack developer, enhancing my technical and coding skills daily. My goal is to build robust web applications that are intuitive and engaging for the user.
+    
+            <p>
+                I am from Haryana PALWAL, and have a deep interest in modern web development technologies.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills" class="skills loaded">
+        <div class="container">
+            <h2><span style="color: var(--primary-color);">#</span> Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card"><h3>HTML</h3></div>
+                <div class="skill-card"><h3>CSS</h3></div>
+                <div class="skill-card"><h3>JavaScript (JS)</h3></div>
+                <div class="skill-card"><h3>React</h3></div>
+                <div class="skill-card"><h3>Python</h3></div>
+                <div class="skill-card"><h3>Java</h3></div>
+                <div class="skill-card"><h3>PHP</h3></div>
+                <div class="skill-card"><h3>MySQL</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects loaded">
+        <div class="container">
+            <h2><span style="color: var(--primary-color);">#</span> My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>AI Voice Translator</h3>
+                        <p>This is an AI-based project that translates voice into different languages in real-time.</p>
+                        <a href="#" class="btn" style="background-color: var(--secondary-color);">View Details</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>University Bus Route Tracking</h3>
+                        <p>A dynamic web application for students to track bus locations and routes.</p>
+                        <a href="#" class="btn" style="background-color: var(--secondary-color);">View Details</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Food/Grocery Delivery System</h3>
+                        <p>A full-stack e-commerce platform connecting customers and delivery partners.</p>
+                        <a href="#" class="btn" style="background-color: var(--secondary-color);">View Details</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact loaded">
+        <div class="container">
+            <h2><span style="color: var(--primary-color);">#</span> Contact Me</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+
+            const options = {
+                threshold: 0.1 // Triggers when 10% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('loaded');
+                        observer.unobserve(entry.target); // Stop observing once loaded
+                    }
+                });
+            }, options);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
